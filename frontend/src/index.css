@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ql-editor {
+  font-size: 1.2rem;
+}
+
+.display_my_post{
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: #333;
+  text-align: justify;
+}
+.display_my_post a{
+  color:red;
+  text-decoration: none;
+}
+.display_my_post a:hover{
+  color: #333;
+  text-decoration: underline;
+}
+.display_my_post img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
