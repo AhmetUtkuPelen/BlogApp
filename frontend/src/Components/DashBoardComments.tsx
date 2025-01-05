@@ -23,15 +23,6 @@ const DashBoardComments = () => {
         numberOfLikes?: number;
     }
 
-    // interface User {
-    //     _id?: string;
-    //     username?: string;
-    //     email?: string;
-    //     profilePicture?: string;
-    //     isAdmin?: boolean;
-    //     createdAt?: string;
-    //     updatedAt?: string;
-    //   }
       
 
   const {currentUser} = useSelector((state: RootState) => state.user);
