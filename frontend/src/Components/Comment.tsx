@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
 import { FaEdit } from "react-icons/fa";
 import { Button, Textarea } from "flowbite-react";
+import { MdDeleteForever } from "react-icons/md";
 
 
 
@@ -32,9 +33,10 @@ interface CommentProps {
   comment: CommentType;
   onLike: (commentId: string) => Promise<string | number | undefined>;
   onEdit: (commentId: string, editedContent: string) => Promise<void>;
+  onDelete: (commentId: string) => void;
 }
 
-const Comment = ({ comment, onLike, onEdit }: CommentProps) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }: CommentProps) => {
 
 
     const {currentUser} = useSelector((state: RootState) => state.user);
@@ -113,9 +115,14 @@ const Comment = ({ comment, onLike, onEdit }: CommentProps) => {
                         }</span>
     
                         {currentUser && (currentUser?._id === comment.userId || currentUser?.isAdmin) && (
+                            <>
                             <button onClick={() => setIsEditingComment(true)} className="ml-2">
                                 <FaEdit className="cursor-pointer text-amber-500 text-lg hover:text-amber-600"/>
                             </button>
+                            <button onClick={() => onDelete(comment._id)} className="ml-2">
+                            <MdDeleteForever className="cursor-pointer text-red-500 text-lg hover:text-red-600"/>
+                            </button>
+                            </>
                         )}
     
                 </div>

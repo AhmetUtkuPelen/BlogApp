@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/Store";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Textarea } from "flowbite-react";
+import { Button, Modal, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Comment from "./Comment";
+import { FaPersonCircleQuestion } from "react-icons/fa6";
 
 interface Comment {
   _id: string;
@@ -28,6 +29,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
 
   const {currentUser} = useSelector((state: RootState) => state.user);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [showModal,setShowModal] = useState(false);
+  const [commentToDelete,setCommentToDelete] = useState<string | null>(null);
+
 
   const navigate = useNavigate();
 
@@ -110,6 +114,29 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
     ))
   }
 
+
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      if(!currentUser){
+        navigate('/login');
+        return toast.error('You Must Be Logged In To Delete A Comment');
+      }
+      if(commentToDelete !== commentId){
+        return toast.error('You Must Be The Owner Of The Comment To Delete It');
+      }
+      const response = await axios.delete(`/api/users/deleteComment/${commentId}`, { withCredentials: true });
+      if(response.status === 200){
+        setComments(comments.filter((comment) => comment._id !== commentId));
+        setShowModal(false);
+        toast.success('Comment Deleted Successfully');
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      toast.error('Error deleting comment');
+    }
+  }
+
+
   return (
     <div className="mt-5 max-w-2xl mx-auto w-full p-3">
       
@@ -158,7 +185,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
       
       {
         comments.map((comment)=>(
-          <Comment key={comment._id} comment={comment} onLike={handleCommentLikes} onEdit={handleEditComment}/>
+          <Comment key={comment._id} comment={comment} onLike={handleCommentLikes} onEdit={handleEditComment} onDelete={(commentId) => {setShowModal(true);setCommentToDelete(commentId);}}/>
         ))
       }
 
@@ -168,6 +195,24 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
 
     )
     }
+
+
+
+        <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
+            <Modal.Header/>
+              <Modal.Body>
+                <div className="text-center">
+                  <FaPersonCircleQuestion className="text-4xl text-red-500 dark:text-white mb-4 mx-auto"/>
+                  <h3 className="mb-5 text-center text-lg text-blue-500">? You Sure You Want To Delete This Comment ?</h3>
+                  <div className="flex justify-center gap-4">
+                    <Button color="failure" onClick={() => commentToDelete && handleDeleteComment(commentToDelete)}>DELETE</Button>
+                    <Button color="blue" onClick={() => setShowModal(false)}>CANCEL</Button>
+                  </div>
+                </div>
+              </Modal.Body>
+          </Modal>
+
+
 
     </div>
   )

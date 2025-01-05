@@ -581,6 +581,33 @@ export const UpdateComment = async (req:CustomRequest, res:Response, next:NextFu
 
 
 
+// ? DELETE COMMENT ? \\
+export const DeleteComment = async (req:CustomRequest, res:Response, next:NextFunction) : Promise<void> => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if(!comment){
+      return next(Error_Handler(404, 'Comment Not Found'));
+    }
+    if(comment.userId !== req.user?.id && !req.user?.isAdmin){
+      return next(Error_Handler(403, 'You Are Not Allowed To Delete This Comment'));
+    }
+    await Comment.findByIdAndDelete(req.params.commentId);
+    res.status(200).json({
+      message:'Comment Has Been Deleted Successfully !',
+      success:true,
+      deleted:true,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+// ? DELETE COMMENT ? \\
+
+
+
+
+
 
 
 
