@@ -608,6 +608,35 @@ export const DeleteComment = async (req:CustomRequest, res:Response, next:NextFu
 
 
 
+// ? GET ALL COMMENTS ? \\
+export const GetAllComments = async (req:CustomRequest, res:Response, next:NextFunction) : Promise<void> => {
+  try {
+    if(!req.user?.isAdmin){
+      return next(Error_Handler(403, 'You Are Not Allowed To Get All Comments'));
+    }
+    const startIndex = parseInt(req.query.startIndex as string) || 0;
+    const limit = parseInt(req.query.limit as string) || 9;
+    const sortDirection = req.query.order === 'asc' ? 1 : -1;
+    const comments = await Comment.find().sort({createdAt:sortDirection}).skip(startIndex).limit(limit);
+    const totalComments = await Comment.countDocuments();
+    const now = new Date();
+    const oneMonthAgo = new Date(now.getFullYear(),now.getMonth()-1,now.getDate());
+    const lastMonthComments = await Comment.countDocuments({createdAt:{
+      $gte:oneMonthAgo
+    }});
+    res.status(200).json({
+      comments,
+      totalComments,
+      lastMonthComments,
+      success:true,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+// ? GET ALL COMMENTS ? \\
+
+
 
 
 

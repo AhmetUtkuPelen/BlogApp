@@ -9,6 +9,7 @@ import { RootState } from "../../Redux/Store"
 import { signOutSuccess } from "../Redux/Slices/UserSlice"
 import { useDispatch } from "react-redux"
 import { FaUsers } from "react-icons/fa6";
+import { HiChatBubbleBottomCenterText } from "react-icons/hi2";
 
 
 
@@ -91,6 +92,16 @@ const DashBoardSideBar = () => {
                   className="cursor-pointer uppercase text-gray-600"
               >
                   Users
+              </Sidebar.Item>
+            </Link>
+
+            <Link to='/dashboard?tab=comments'>
+              <Sidebar.Item  as='div'
+                  active={tab === 'comments'} 
+                  icon={() => <HiChatBubbleBottomCenterText className="text-blue-600 text-2xl" />}
+                  className="cursor-pointer uppercase text-gray-600"
+              >
+                  Comments
               </Sidebar.Item>
             </Link>
           </>
