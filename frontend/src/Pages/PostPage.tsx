@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import CommentSection from "../Components/CommentSection";
+import PostCard from "../Components/PostCard";
 
 
 
@@ -28,6 +29,8 @@ const PostPage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error,setError] = useState<string | null | boolean>(null);
     const [post,setPost] = useState<Post | null>(null);
+    const [relatedPosts,setRelatedPosts] = useState<Post[]>([]);
+    const [showAllPosts, setShowAllPosts] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -56,11 +59,29 @@ const PostPage = () => {
     },[postSlug])
 
 
+    useEffect(() => {
+        try {
+            const fetchRelatedPosts = async () => {
+                const response = await axios.get(`/api/users/getAllPosts?limit=3?category=${post?.category}`);
+                if(response.status === 200){
+                    setRelatedPosts(response.data.posts);
+                }else if(response.status !== 200){
+                    toast.error(`${response.data.message}`);
+                }
+            }
+            fetchRelatedPosts();
+        } catch (error) {
+            console.log(error);
+        }
+    },[post])
+
+
     if(loading) return (
         <div className="flex justify-center items-center min-h-screen">
             <Spinner size="xl" color="info" />
         </div>
     )
+
 
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
@@ -86,6 +107,24 @@ const PostPage = () => {
     </div>
 
     <CommentSection postId={post?._id || ''} />
+
+    <div className="flex flex-col justify-normal items-center mb-5 mt-5">
+        <h1 className="text-lg font-bold text-teal-600 capitalize">Related Posts</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+            {relatedPosts.slice(0, showAllPosts ? relatedPosts.length : 3).map((post) => (
+                <PostCard post={post} key={post._id} />
+            ))}
+        </div>
+        {relatedPosts.length > 3 && (
+            <Button 
+                onClick={() => setShowAllPosts(!showAllPosts)}
+                className="mt-4"
+                color="blue"
+            >
+                {showAllPosts ? 'Show Less' : 'Show More'}
+            </Button>
+        )}
+    </div>
 
     {error && <Alert color="failure">Error loading post</Alert>}
 

@@ -7,7 +7,6 @@ import Post from "../Models/PostModel";
 import Comment from "../Models/CommentModel";
 
 
-
 interface CustomRequest extends Request {
   user?: {
     id: string;
