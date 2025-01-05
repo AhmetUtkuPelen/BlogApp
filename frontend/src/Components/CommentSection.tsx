@@ -94,13 +94,21 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
           } : comment
         ))
       }
-      toast.success('Comment Liked Successfully');
     } catch (error) {
       console.error('Error liking comment:', error);
       toast.error('Error liking comment');
     }
   }
 
+
+  const handleEditComment = async (commentId: string, editedContent: string) => {
+    setComments(comments.map((comment) => 
+      comment._id === commentId ? {
+        ...comment,
+        content: editedContent
+      } : comment
+    ))
+  }
 
   return (
     <div className="mt-5 max-w-2xl mx-auto w-full p-3">
@@ -150,7 +158,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
       
       {
         comments.map((comment)=>(
-          <Comment key={comment._id} comment={comment} onLike={handleCommentLikes}/>
+          <Comment key={comment._id} comment={comment} onLike={handleCommentLikes} onEdit={handleEditComment}/>
         ))
       }
 

@@ -558,6 +558,42 @@ export const LikeComment = async (req:CustomRequest, res:Response, next:NextFunc
 
 
 
+// ? UPDATE COMMENT ? \\
+export const UpdateComment = async (req:CustomRequest, res:Response, next:NextFunction) : Promise<void> => {
+  try {
+    const comment = await Comment.findById(req.params.commentId);
+    if(!comment){
+      return next(Error_Handler(404, 'Comment Not Found'));
+    }
+    if(comment.userId !== req.user?.id && !req.user?.isAdmin){
+      return next(Error_Handler(403, 'You Are Not Allowed To Update This Comment'));
+    }
+    const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId,{$set:{content:req.body.content}},{new:true});
+    res.status(200).json(updatedComment);
+  } catch (error) {
+    next(error);
+  }
+}
+// ? UPDATE COMMENT ? \\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

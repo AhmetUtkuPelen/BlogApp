@@ -1,5 +1,5 @@
 import express from "express"
-import { UserRegister,UserLogin,GoogleAuth, UpdateUser, DeleteUser,LogoutUser, UserCreatePost, GetAllPosts, DeletePost, UpdatePost, GetAllUsers, AdminDeleteUser, GetPostBySlug, UserPostComment,UserGetComments, GetUserById, LikeComment } from './../Controllers/UserController';
+import { UserRegister,UserLogin,GoogleAuth, UpdateUser, DeleteUser,LogoutUser, UserCreatePost, GetAllPosts, DeletePost, UpdatePost, GetAllUsers, AdminDeleteUser, GetPostBySlug, UserPostComment,UserGetComments, GetUserById, LikeComment,UpdateComment } from './../Controllers/UserController';
 import { VerifyUser } from './../Utils/VerifyUser';
 
 
@@ -91,10 +91,15 @@ UserRouter.get('/getComments/:postId',VerifyUser, UserGetComments)
 
 
 
-
 // ? LIKE COMMENT ? \\
 UserRouter.put('/likeComment/:commentId',VerifyUser, LikeComment)
 // ? LIKE COMMENT ? \\
+
+
+
+// ? UPDATE COMMENT ? \\
+UserRouter.put('/updateComment/:commentId',VerifyUser, UpdateComment)
+// ? UPDATE COMMENT ? \\
 
 
 
