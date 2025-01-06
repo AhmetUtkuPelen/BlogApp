@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
-  
   const date = new Date();
   const GetCurrentDate = date.getFullYear();
 
@@ -18,37 +17,36 @@ const Footer = () => {
         </span>
 
         <div className="flex items-center justify-center mt-4 md:mt-0">
-        <ul className="flex flex-wrap items-center justify-center mt-3 text-sm font-medium text-gray-600 dark:text-gray-400 sm:mt-0">
-          <li className="mr-4 md:mr-6">
-            <Link
-              to="https://github.com/AhmetUtkuPelen"
-              target="_blank"
-              className="hover:underline me-4 md:me-6 text-2xl text-blue-600"
-            >
-              <FaGithub />
-            </Link>
-          </li>
-          <li className="mr-4 md:mr-6">
-            <Link
-              to="https://github.com/AhmetUtkuPelen"
-              target="_blank"
-              className="hover:underline me-4 md:me-6 text-2xl text-blue-600"
-            >
-              <FaLinkedin />
-            </Link>
-          </li>
-          <li className="mr-4 md:mr-6">
-            <Link
-              to="https://www.instagram.com/rngd_aup/"
-              target="_blank"
-              className="hover:underline me-4 md:me-6 text-2xl text-blue-500"
-            >
-              <FaInstagram />
-            </Link>
-          </li>
-        </ul>
+          <ul className="flex flex-wrap items-center justify-center mt-3 text-sm font-medium text-gray-600 dark:text-gray-400 sm:mt-0">
+            <li className="mr-4 md:mr-6">
+              <Link
+                to="https://github.com/AhmetUtkuPelen"
+                target="_blank"
+                className="hover:underline me-4 md:me-6 text-2xl text-blue-600"
+              >
+                <FaGithub />
+              </Link>
+            </li>
+            <li className="mr-4 md:mr-6">
+              <Link
+                to="https://github.com/AhmetUtkuPelen"
+                target="_blank"
+                className="hover:underline me-4 md:me-6 text-2xl text-blue-600"
+              >
+                <FaLinkedin />
+              </Link>
+            </li>
+            <li className="mr-4 md:mr-6">
+              <Link
+                to="https://www.instagram.com/rngd_aup/"
+                target="_blank"
+                className="hover:underline me-4 md:me-6 text-2xl text-blue-500"
+              >
+                <FaInstagram />
+              </Link>
+            </li>
+          </ul>
         </div>
-
       </div>
     </footer>
   );

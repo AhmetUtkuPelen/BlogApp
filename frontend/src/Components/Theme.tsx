@@ -1,12 +1,9 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import { PropsWithChildren } from "react";
 import { RootState } from "../../Redux/Store";
 
-
-
 const Theme = ({ children }: PropsWithChildren<unknown>) => {
-
-    const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <div className={theme}>
@@ -14,7 +11,7 @@ const Theme = ({ children }: PropsWithChildren<unknown>) => {
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Theme
+export default Theme;
