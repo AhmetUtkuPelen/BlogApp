@@ -46,7 +46,7 @@ const UpdatePost = () => {
   useEffect(()=>{
     try {
       const fetchPost = async () => {
-        const response = await axios.get(`http://localhost:5555/api/users/getAllPosts?postId=${postId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllPosts?postId=${postId}`, {
           withCredentials: true
         })
 
@@ -130,7 +130,7 @@ const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
   }
 
   try {
-    const response = await fetch(`http://localhost:5555/api/users/updatePost/${formData._id}/${currentUser?._id}`, {
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/updatePost/${formData._id}/${currentUser?._id}`, {
       method: 'PUT',
       credentials: 'include',
       body: JSON.stringify(formData),

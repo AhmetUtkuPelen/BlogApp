@@ -35,7 +35,7 @@ const DashBoardPosts = () => {
     const FetchPosts = async () => {
       try {
         if (!currentUser) return;
-        const response = await axios.get(`/api/users/getAllPosts?userId=${currentUser?._id}`);
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllPosts?userId=${currentUser?._id}`);
         const data = response.data;
         console.log(data);
         if(response.status === 200){
@@ -57,7 +57,7 @@ const DashBoardPosts = () => {
   const HandleShowMorePosts = async () => {
     const startIndex = posts.length;
     try {
-      const response = await axios.get(`/api/users/getAllPosts?userId=${currentUser?._id}&startIndex=${startIndex}`);
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllPosts?userId=${currentUser?._id}&startIndex=${startIndex}`);
       const data = response.data;
       if(response.status === 200){
         setPosts([...posts,...data.posts]);
@@ -77,7 +77,7 @@ const DashBoardPosts = () => {
   const HandleDeletePost = async () => {
     setShowModal(false);
     try {
-      const response = await axios.delete(`/api/users/deletePost/${postIdToDelete}/${currentUser?._id}`);
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/deletePost/${postIdToDelete}/${currentUser?._id}`);
       const data = response.data;
       if(response.status !== 200){
         console.log(data);

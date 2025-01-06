@@ -85,36 +85,6 @@ const DashBoardProfile = () => {
     setFormData({ ...formData, [event.target.id]: event.target.value });
 }
 
-// const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//   e.preventDefault();
-//   if(Object.keys(formData).length === 0){
-//     return
-//   }
-//   try {
-//     if (!currentUser?._id) {
-//       return toast.error('User not found');
-//     }
-//     dispatch(updateStart())
-//     const response = await fetch(`/api/users/update/${currentUser._id}`,{
-//       method:'PUT',
-//       headers:{
-//         'Content-Type':'application/json'
-//       },
-//       body:JSON.stringify(formData)
-//     })
-//     const data = await response.json()
-//     if(!response.ok){
-//       dispatch(updateFailure(data.message))
-//       return toast.error(data.message)
-//     }else{
-//       dispatch(updateSuccess(data))
-//       toast.success('Profile updated successfully')
-//     }
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
 
 
 // ? UPDATE USER BY SUBMITTING FORM ? \\
@@ -129,7 +99,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     dispatch(updateStart());
     
     const response = await axios.put(
-      `http://localhost:5555/api/users/update/${currentUser._id}`, 
+      `${import.meta.env.VITE_SERVER_URL}/api/users/update/${currentUser._id}`, 
       formData,
       {
         withCredentials: true,  // Important for sending cookies
@@ -161,7 +131,7 @@ const UserHandleDelete = async () => {
   setShowModal(false)
   try {
     dispatch(deleteUserStart())
-    await axios.delete(`http://localhost:5555/api/users/delete/${currentUser?._id}`, {withCredentials: true});
+    await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/delete/${currentUser?._id}`, {withCredentials: true});
     toast.success('Account deleted successfully');
     dispatch(deleteUserSuccess())
   } catch (error) {
@@ -175,7 +145,7 @@ const UserHandleDelete = async () => {
 // ? LOGOUT USER ? \\
 const UserHandleLogout = async () => {
   try {
-    await axios.get('/api/users/logout', { withCredentials: true });
+    await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/logout`, { withCredentials: true });
     
     // Dispatch before navigation
     dispatch(signOutSuccess());

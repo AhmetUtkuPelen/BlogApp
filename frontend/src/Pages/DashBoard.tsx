@@ -5,6 +5,7 @@ import DashBoardProfile from "../Components/DashBoardProfile";
 import DashBoardPosts from "../Components/DashBoardPosts";
 import DashBoardDisplayUsers from "../Components/DashBoardDisplayUsers";
 import DashBoardComments from "../Components/DashBoardComments";
+import DashBoardComponent from "../Components/DashBoardComponent";
 
 
 
@@ -46,6 +47,10 @@ const DashBoard = () => {
       {tab === 'comments' && <DashBoardComments/>}
     </div>
 
+    <div className="mt-10 px-4">
+      {tab === 'dashboard' && <DashBoardComponent/>}
+    </div>
+    
     </div>
   );
 }

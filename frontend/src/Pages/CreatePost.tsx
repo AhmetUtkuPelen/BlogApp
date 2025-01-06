@@ -99,7 +99,7 @@ const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
   }
 
   try {
-    const response = await fetch(`http://localhost:5555/api/users/createPost`, {
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/createPost`, {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify(formData),

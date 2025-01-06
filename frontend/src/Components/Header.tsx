@@ -27,7 +27,7 @@ const Header = () => {
   // ? LOGOUT USER ? \\
 const UserHandleLogout = async () => {
   try {
-    await axios.get('/api/users/logout', { withCredentials: true });
+    await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/logout`, { withCredentials: true });
     
     // Dispatch before navigation
     dispatch(signOutSuccess());

@@ -21,7 +21,7 @@ const GoogleAuth = () => {
       authProvider.setCustomParameters({prompt:'select_account'});
       try {
         const resultsGoogle = await signInWithPopup(auth,authProvider);
-        const response = await fetch('/api/users/google',{
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/users/google`,{
           method:'POST',
           headers: {
             'Content-Type': 'application/json'

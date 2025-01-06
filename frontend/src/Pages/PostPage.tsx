@@ -37,7 +37,7 @@ const PostPage = () => {
         const fetchPost = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`/api/users/getAllPosts?slug=${postSlug}`);
+                const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllPosts?slug=${postSlug}`);
                 const data = response.data;
                 if(response.status === 200){
                     setPost(data.posts[0]);
@@ -62,7 +62,7 @@ const PostPage = () => {
     useEffect(() => {
         try {
             const fetchRelatedPosts = async () => {
-                const response = await axios.get(`/api/users/getAllPosts?limit=3?category=${post?.category}`);
+                const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllPosts?limit=3?category=${post?.category}`);
                 if(response.status === 200){
                     setRelatedPosts(response.data.posts);
                 }else if(response.status !== 200){

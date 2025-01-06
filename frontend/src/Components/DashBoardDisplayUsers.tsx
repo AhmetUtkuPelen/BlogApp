@@ -36,7 +36,7 @@ const DashBoardDisplayUsers = () => {
     const FetchUsers = async () => {
       try {
         if (!currentUser) return;
-        const response = await axios.get(`/api/users/getAllUsers`);
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllUsers`);
         const data = response.data;
         if(response.status === 200){
           setUsers(response.data.users);
@@ -57,7 +57,7 @@ const DashBoardDisplayUsers = () => {
   const HandleShowMorePosts = async () => {
     const startIndex = users.length;
     try {
-      const response = await axios.get(`/api/users/getAllUsers?startIndex=${startIndex}`);
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllUsers?startIndex=${startIndex}`);
       const data = response.data;
       if(response.status === 200){
         setUsers([...users,...data.users]);
@@ -77,7 +77,7 @@ const DashBoardDisplayUsers = () => {
   const HandleDeleteUser = async () => {
     setShowModal(false);
     try {
-      const response = await axios.delete(`/api/users/adminDeleteUsers/${userIdToDelete}`);
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/adminDeleteUsers/${userIdToDelete}`);
       const data = response.data;
       if(response.status === 200){
         setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userIdToDelete));

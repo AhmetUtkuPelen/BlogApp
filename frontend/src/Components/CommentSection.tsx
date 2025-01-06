@@ -38,7 +38,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
   useEffect(()=>{
     const fetchComments = async () => {
      try {
-      const response = await axios.get(`/api/users/getComments/${postId}`,{
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getComments/${postId}`,{
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
       if(comment.length > 200){
         return toast.error('Comment Must Be Less Than 200 Characters');
       }
-      const response = await axios.post('/api/users/postComment', 
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/users/postComment`, 
         { content: comment, postId, userId: currentUser?._id },
         { withCredentials: true }
       );
@@ -88,7 +88,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
         navigate('/login');
         return toast.error('You Must Be Logged In To Like A Comment');
       }
-      const response = await axios.put(`/api/users/likeComment/${commentId}`,{withCredentials:true});
+      const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/users/likeComment/${commentId}`,{withCredentials:true});
       if(response.status === 200){
         setComments(comments.map((comment) => 
           comment._id === commentId ? {
@@ -124,7 +124,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({postId}: CommentSectionP
       if(commentToDelete !== commentId){
         return toast.error('You Must Be The Owner Of The Comment To Delete It');
       }
-      const response = await axios.delete(`/api/users/deleteComment/${commentId}`, { withCredentials: true });
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/deleteComment/${commentId}`, { withCredentials: true });
       if(response.status === 200){
         setComments(comments.filter((comment) => comment._id !== commentId));
         setShowModal(false);

@@ -36,7 +36,7 @@ const DashBoardComments = () => {
     const FetchComments = async () => {
       try {
         if (!currentUser) return;
-        const response = await axios.get(`/api/users/getAllComments`);
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getAllComments`);
         const data = response.data;
         if(response.status === 200){
           setComments(response.data.comments);
@@ -57,7 +57,7 @@ const DashBoardComments = () => {
   const HandleShowMoreComments = async () => {
     const startIndex = comments.length;
     try {
-      const response = await axios.get(`/api/comments/getAllComments?startIndex=${startIndex}`);
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/comments/getAllComments?startIndex=${startIndex}`);
       const data = response.data;
       if(response.status === 200){
         setComments([...comments,...data.comments]);
@@ -76,7 +76,7 @@ const DashBoardComments = () => {
 
   const handleDeleteComment = async () => {
     try {
-      const response = await axios.delete(`/api/users/deleteComment/${commentIdToDelete}`, {
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/users/deleteComment/${commentIdToDelete}`, {
         withCredentials: true
       });
       

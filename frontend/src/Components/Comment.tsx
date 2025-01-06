@@ -49,7 +49,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }: CommentProps) => {
     useEffect(()=>{
         const getUser = async () => {
             try {
-             const response = await axios.get(`/api/users/getUserById/${comment.userId}`);
+             const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/getUserById/${comment.userId}`);
              if(response.status === 200){
                 const data = response.data;
                 setUser(data);
@@ -64,7 +64,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }: CommentProps) => {
 
     const handleUpdateComment = async () => {
         try {
-            await axios.put(`/api/users/updateComment/${comment._id}`, {
+            await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/users/updateComment/${comment._id}`, {
                 content: editedCommentContent
             });
             setIsEditingComment(false);

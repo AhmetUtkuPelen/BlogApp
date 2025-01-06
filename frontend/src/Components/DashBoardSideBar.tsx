@@ -10,6 +10,7 @@ import { signOutSuccess } from "../Redux/Slices/UserSlice"
 import { useDispatch } from "react-redux"
 import { FaUsers } from "react-icons/fa6";
 import { HiChatBubbleBottomCenterText } from "react-icons/hi2";
+import { MdDashboardCustomize } from "react-icons/md"
 
 
 
@@ -34,7 +35,7 @@ const DashBoardSideBar = () => {
     // ? LOGOUT USER ? \\
     const UserHandleLogout = async () => {
       try {
-        await axios.get('/api/users/logout', { withCredentials: true });
+        await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users/logout`, { withCredentials: true });
         
         // Dispatch before navigation
         dispatch(signOutSuccess());
@@ -102,6 +103,16 @@ const DashBoardSideBar = () => {
                   className="cursor-pointer uppercase text-gray-600"
               >
                   Comments
+              </Sidebar.Item>
+            </Link>
+
+            <Link to='/dashboard?tab=dashboard'>
+              <Sidebar.Item  as='div'
+                  active={tab === 'dashboard'} 
+                  icon={() => <MdDashboardCustomize className="text-blue-600 text-2xl" />}
+                  className="cursor-pointer uppercase text-gray-600"
+              >
+                  Dashboard
               </Sidebar.Item>
             </Link>
           </>
