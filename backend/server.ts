@@ -7,6 +7,11 @@ import UserRouter from './Routes/UserRoutes';
 import {ErrorHandler} from "./Middlewares/ErrorHandler"
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import path from "path";
+
+
+
+const __dirname = path.resolve();
 
 
 const app = express();
@@ -52,6 +57,13 @@ app.get('/api/test', (req:Request, res:Response) => {
   res.json({ message: 'API is working' });
 });
 
+
+
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+app.get('*', (req:Request, res:Response) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
+})
 
 
 // ? DATABASE ? \\
