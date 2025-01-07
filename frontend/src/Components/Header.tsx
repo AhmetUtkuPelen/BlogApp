@@ -1,5 +1,5 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../Assets/logo.png";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -10,15 +10,30 @@ import { toggleTheme } from "../../Redux/Slices/ThemeSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { signOutSuccess } from "../Redux/Slices/UserSlice";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const currentUser = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const theme = useSelector((state: RootState) => state.theme);
 
   const path = useLocation().pathname;
+  const location = useLocation();
+
+  const [search, setSearch] = useState<string>('');
+
+  useEffect(()=>{
+    const urlParams = new URLSearchParams(location.search);
+    const searchFormUrl = urlParams.get("search");
+    if(searchFormUrl){
+      setSearch(searchFormUrl);
+    }
+  },[location.search])
+
+
 
   // ? LOGOUT USER ? \\
   const UserHandleLogout = async () => {
@@ -43,18 +58,30 @@ const Header = () => {
   };
   // ? LOGOUT USER ? \\
 
+
+  const HandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("search", search);
+    const searchUrl = urlParams.toString();
+    navigate(`/search?${searchUrl}`);
+  };
+
+
   return (
     <Navbar className="border-b-2">
       <Link to="/" className="self-center whitespace-nowrap w-40">
         <img src={Logo} alt="" />
       </Link>
 
-      <form>
+      <form onSubmit={HandleSubmit}>
         <TextInput
           type="text"
           placeholder="Search"
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
         />
       </form>
 
@@ -149,9 +176,6 @@ const Header = () => {
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
           <Link to="/about">ABOUT</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects">PROJECTS</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/dashboard"} as={"div"}>
           <Link to="/dashboard">DASHBOARD</Link>

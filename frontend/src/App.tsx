@@ -15,6 +15,7 @@ import AdminRoute from './Components/AdminRoute.tsx'
 import UpdatePost from './Pages/UpdatePost.tsx'
 import PostPage from './Pages/PostPage.tsx'
 import { ScrollToTop } from './Components/ScrollToTop.tsx'
+import Search from './Pages/Search.tsx'
 
 
 
@@ -31,6 +32,7 @@ function App() {
               <Route path="/projects" element={<Projects/>}/>
               <Route path="/register" element={<Register/>}/>
               <Route path="/login" element={<Login/>}/>
+              <Route path="/search" element={<Search/>}/>
               <Route element={<PrivateRoute/>}>
                   <Route path="/dashboard" element={<DashBoard/>}/>
               </Route>

@@ -8,6 +8,7 @@ interface CustomFormData {
   username: string;
   email: string;
   password: string;
+  isAdmin: boolean;
 }
 
 const Register = () => {
@@ -15,6 +16,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    isAdmin: false
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,6 +26,10 @@ const Register = () => {
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, isAdmin: e.target.checked });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -133,6 +139,23 @@ const Register = () => {
                 className="mt-2"
                 onChange={handleChange}
               />
+            </div>
+
+            <div className="text-center">
+              <Label
+                value="Admin Account"
+                className="text-blue-600 font-bold text-md"
+              />
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <input
+                  type="checkbox"
+                  id="isAdmin"
+                  checked={formData.isAdmin}
+                  onChange={handleCheckboxChange}
+                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                />
+                <span className="text-gray-700">Register as Admin</span>
+              </div>
             </div>
 
             <Button type="submit" color="blue" outline disabled={loading}>
