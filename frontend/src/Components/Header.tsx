@@ -1,6 +1,6 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
-import TypeScript from "../Assets/typescript.png";
+import Logo from "../Assets/logo.png";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -45,8 +45,8 @@ const Header = () => {
 
   return (
     <Navbar className="border-b-2">
-      <Link to="/" className="self-center whitespace-nowrap w-20">
-        <img src={TypeScript} alt="" />
+      <Link to="/" className="self-center whitespace-nowrap w-40">
+        <img src={Logo} alt="" />
       </Link>
 
       <form>
