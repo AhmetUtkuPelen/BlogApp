@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --exec ts-node backend/server.ts",
-    "start": "node dist/server.js",
+    "start": "node --experimental-specifier-resolution=node dist/server.js",
     "build": "npm install && tsc && npm install --prefix frontend && npm run build --prefix frontend",
     "postinstall": "tsc"
   },
