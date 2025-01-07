@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "dev": "nodemon backend/index.js",
-    "start": "node backend/index.js",
+    "dev": "nodemon backend/server.ts",
+    "start": "node backend/server.ts",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
